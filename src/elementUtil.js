@@ -9,7 +9,7 @@ const elementUtil = (function () {
 
   const setMultipleAttributeToElement = (element, elementAttribute) => {
     for (const attribute in elementAttribute) {
-      element.setAttribute(attr, elementAttribute[attribute]);
+      element.setAttribute(attribute, elementAttribute[attribute]);
     }
   };
 
