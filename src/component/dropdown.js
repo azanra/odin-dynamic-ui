@@ -22,27 +22,42 @@ const dropdownMenuItemsAttr = {
   },
 };
 
+const dropdownMenuItemAttr = {
+  elementType: "div",
+  elementAttribute: {
+    class: "dropdownMenuItem",
+  },
+};
+
 const dropdown = (menuItems) => {
   const renderDropdown = () => {
     const dropdown = elementUtil.createElement(dropdownAttr);
     dropdown.appendChild(renderTriggerBtn());
+    const dropdownMenuItem = elementUtil.createElement(dropdownMenuItemAttr);
     const dropdownMenuItems = renderMenuItems(menuItems);
     dropdownMenuItems.forEach((menuItems) => {
-      dropdown.appendChild(menuItems);
+      dropdownMenuItem.appendChild(menuItems);
     });
+    dropdownMenuItem.hidden = true;
+    dropdown.appendChild(dropdownMenuItem);
     return dropdown;
   };
 
   const renderTriggerBtn = () => {
     const triggerBtn = elementUtil.createElement(dropdownTriggerBtnAttr);
+    triggerBtn.addEventListener("click", handleTriggerClick);
     return triggerBtn;
+  };
+
+  const handleTriggerClick = () => {
+    const dropdownMenuItem = document.querySelector(".dropdownMenuItem");
+    dropdownMenuItem.hidden = !dropdownMenuItem.hidden;
   };
 
   const renderMenuItems = (menuItems) => {
     const dropdownMenuItems = menuItems.map((item) => {
       const menuItem = elementUtil.createElement(dropdownMenuItemsAttr);
       elementUtil.appendTextToElement(menuItem, item);
-      menuItem.hidden = true;
       return menuItem;
     });
     return dropdownMenuItems;
