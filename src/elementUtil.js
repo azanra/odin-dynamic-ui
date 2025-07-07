@@ -14,7 +14,9 @@ const elementUtil = (function () {
   };
 
   const appendTextToElement = (element, text) => {
-    element.textContent = text;
+    if (text) {
+      element.textContent = text;
+    }
   };
 
   return { createElement, setMultipleAttributeToElement, appendTextToElement };
