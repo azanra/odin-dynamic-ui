@@ -38,19 +38,35 @@ const imageCarousel = (imgSrc) => {
   };
 
   const incrementImgIndex = () => {
-    if (imgIndex < imgSrc.length) {
-      state.imgIndex = state.imgIndex++;
+    if (state.imgIndex < imgSrc.length - 1) {
+      state.imgIndex = state.imgIndex + 1;
     } else {
       state.imgIndex = 0;
     }
   };
 
   const decrementImgIndex = () => {
-    if (imgIndex > 0) {
-      state.imgIndex = state.imgIndex--;
+    if (state.imgIndex > 0) {
+      state.imgIndex = state.imgIndex - 1;
     } else {
       state.imgIndex = imgSrc.length - 1;
     }
+  };
+
+  const updateImg = (img) => {
+    img.src = imgSrc[state.imgIndex];
+  };
+
+  const previousBtnEvent = () => {
+    const img = document.querySelector(".img");
+    decrementImgIndex();
+    updateImg(img);
+  };
+
+  const nextBtnEvent = () => {
+    const img = document.querySelector(".img");
+    incrementImgIndex();
+    updateImg(img);
   };
 
   const renderCarousel = () => {
@@ -63,16 +79,19 @@ const imageCarousel = (imgSrc) => {
 
   const renderImg = () => {
     const img = elementUtil.createElement(imgAttr);
+    updateImg(img);
     return img;
   };
 
   const renderPreviousBtn = () => {
     const previousBtn = elementUtil.createElement(previosBtnAttr);
+    previousBtn.addEventListener("click", previousBtnEvent);
     return previousBtn;
   };
 
   const renderNextBtn = () => {
     const nextBtn = elementUtil.createElement(nextBtnAttr);
+    nextBtn.addEventListener("click", nextBtnEvent);
     return nextBtn;
   };
 
