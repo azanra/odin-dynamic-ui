@@ -14,6 +14,24 @@ const imgAttr = {
   },
 };
 
+const previosBtnAttr = {
+  elementType: "button",
+  elementAttribute: {
+    type: "button",
+    class: "previousBtn",
+  },
+  textContent: "<",
+};
+
+const nextBtnAttr = {
+  elementType: "button",
+  elementAttribute: {
+    type: "button",
+    class: "nextBtn",
+  },
+  textContent: ">",
+};
+
 const imageCarousel = (imgSrc) => {
   const state = {
     imgIndex: 0,
@@ -37,13 +55,25 @@ const imageCarousel = (imgSrc) => {
 
   const renderCarousel = () => {
     const imageCarousel = elementUtil.createElement(imageCarouselAttr);
+    imageCarousel.appendChild(renderPreviousBtn());
     imageCarousel.appendChild(renderImg());
+    imageCarousel.appendChild(renderNextBtn());
     return imageCarousel;
   };
 
   const renderImg = () => {
     const img = elementUtil.createElement(imgAttr);
     return img;
+  };
+
+  const renderPreviousBtn = () => {
+    const previousBtn = elementUtil.createElement(previosBtnAttr);
+    return previousBtn;
+  };
+
+  const renderNextBtn = () => {
+    const nextBtn = elementUtil.createElement(nextBtnAttr);
+    return nextBtn;
   };
 
   return renderCarousel();
