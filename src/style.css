@@ -4,3 +4,21 @@
   height: 300px;
   box-shadow: 0px 0px 5px 0px grey;
 }
+
+.img {
+  width: 250px;
+  height: 250px;
+}
+
+.navigationContainer {
+  display: flex;
+  position: relative;
+  left: 100px;
+}
+
+.navigation {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid gray;
+}

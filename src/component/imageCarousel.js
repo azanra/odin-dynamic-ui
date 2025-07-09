@@ -32,6 +32,20 @@ const nextBtnAttr = {
   textContent: ">",
 };
 
+const navigationContainerAttr = {
+  elementType: "div",
+  elementAttribute: {
+    class: "navigationContainer",
+  },
+};
+
+const navigationAttr = {
+  elementType: "div",
+  elementAttribute: {
+    class: "navigation",
+  },
+};
+
 const imageCarousel = (imgSrc) => {
   const state = {
     imgIndex: 0,
@@ -74,6 +88,7 @@ const imageCarousel = (imgSrc) => {
     imageCarousel.appendChild(renderPreviousBtn());
     imageCarousel.appendChild(renderImg());
     imageCarousel.appendChild(renderNextBtn());
+    imageCarousel.appendChild(renderNavigationContainer());
     return imageCarousel;
   };
 
@@ -93,6 +108,24 @@ const imageCarousel = (imgSrc) => {
     const nextBtn = elementUtil.createElement(nextBtnAttr);
     nextBtn.addEventListener("click", nextBtnEvent);
     return nextBtn;
+  };
+
+  const renderNavigationContainer = () => {
+    const navContainer = elementUtil.createElement(navigationContainerAttr);
+    const navigation = renderNavigation();
+    navigation.forEach((nav) => {
+      navContainer.appendChild(nav);
+    });
+    return navContainer;
+  };
+
+  const renderNavigation = () => {
+    const nav = imgSrc.map((img) => {
+      const navItem = elementUtil.createElement(navigationAttr);
+      navItem.id = img;
+      return navItem;
+    });
+    return nav;
   };
 
   return renderCarousel();
