@@ -51,19 +51,23 @@ const imageCarousel = (imgSrc) => {
     imgIndex: 0,
   };
 
+  const setImgIndex = (value) => {
+    state.imgIndex = value;
+  };
+
   const incrementImgIndex = () => {
     if (state.imgIndex < imgSrc.length - 1) {
-      state.imgIndex = state.imgIndex + 1;
+      setImgIndex(state.imgIndex + 1);
     } else {
-      state.imgIndex = 0;
+      setImgIndex(0);
     }
   };
 
   const decrementImgIndex = () => {
     if (state.imgIndex > 0) {
-      state.imgIndex = state.imgIndex - 1;
+      setImgIndex(state.imgIndex - 1);
     } else {
-      state.imgIndex = imgSrc.length - 1;
+      setImgIndex(imgSrc.length - 1);
     }
   };
 
