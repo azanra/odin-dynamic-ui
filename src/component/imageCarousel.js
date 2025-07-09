@@ -75,12 +75,14 @@ const imageCarousel = (imgSrc) => {
     const img = document.querySelector(".img");
     decrementImgIndex();
     updateImg(img);
+    fillNavigation();
   };
 
   const nextBtnEvent = () => {
     const img = document.querySelector(".img");
     incrementImgIndex();
     updateImg(img);
+    fillNavigation();
   };
 
   const renderCarousel = () => {
@@ -110,6 +112,24 @@ const imageCarousel = (imgSrc) => {
     return nextBtn;
   };
 
+  const fillNavigation = () => {
+    const navigation = document.querySelectorAll(".navigation");
+    const activeImg = imgSrc[state.imgIndex];
+    navigation.forEach((nav) => {
+      if (nav.id === activeImg) {
+        nav.style.backgroundColor = "black";
+      } else {
+        nav.style.backgroundColor = "";
+      }
+    });
+  };
+
+  const fillNavigationOnLoad = () => {
+    window.onload = () => {
+      fillNavigation();
+    };
+  };
+
   const renderNavigationContainer = () => {
     const navContainer = elementUtil.createElement(navigationContainerAttr);
     const navigation = renderNavigation();
@@ -127,6 +147,8 @@ const imageCarousel = (imgSrc) => {
     });
     return nav;
   };
+
+  fillNavigationOnLoad();
 
   return renderCarousel();
 };
