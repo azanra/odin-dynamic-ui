@@ -132,6 +132,7 @@ const imageCarousel = (imgSrc) => {
     window.onload = () => {
       fillNavigation();
       navigationListener();
+      autoAdvanceSlide();
     };
   };
 
@@ -173,6 +174,15 @@ const imageCarousel = (imgSrc) => {
       return navItem;
     });
     return nav;
+  };
+
+  const autoAdvanceSlide = () => {
+    setInterval(() => {
+      const img = document.querySelector(".img");
+      incrementImgIndex();
+      updateImg(img);
+      fillNavigation();
+    }, "5000");
   };
 
   fillNavigationOnLoad();
