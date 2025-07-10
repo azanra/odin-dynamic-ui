@@ -131,7 +131,29 @@ const imageCarousel = (imgSrc) => {
   const fillNavigationOnLoad = () => {
     window.onload = () => {
       fillNavigation();
+      navigationListener();
     };
+  };
+
+  const navigationListener = () => {
+    const navigation = document.querySelectorAll(".navigation");
+    navigation.forEach((nav) => {
+      nav.addEventListener("click", navigationEvent);
+    });
+  };
+
+  const navigationEvent = (e) => {
+    const img = document.querySelector(".img");
+    const imgId = e.target.id;
+    let imgIndex;
+    imgSrc.forEach((src, index) => {
+      if (imgId === src) {
+        imgIndex = index;
+      }
+    });
+    setImgIndex(imgIndex);
+    updateImg(img);
+    fillNavigation();
   };
 
   const renderNavigationContainer = () => {
@@ -144,9 +166,10 @@ const imageCarousel = (imgSrc) => {
   };
 
   const renderNavigation = () => {
-    const nav = imgSrc.map((img) => {
+    const nav = imgSrc.map((img, index) => {
       const navItem = elementUtil.createElement(navigationAttr);
       navItem.id = img;
+      navItem.class = index;
       return navItem;
     });
     return nav;
