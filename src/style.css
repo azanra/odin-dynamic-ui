@@ -1,3 +1,24 @@
+:root {
+  --system-ui:
+    system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body {
+  font-family: var(--system-ui);
+}
+
+.carouselImgSwitcherContainer {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.img {
+  height: 250px;
+  width: 250px;
+}
+
 .dropdownMenuItem {
   width: 220px;
   height: 300px;
@@ -25,9 +46,8 @@
 }
 
 .navigationContainer {
-  display: flex;
-  position: relative;
-  left: 100px;
+  justify-content: center;
+  margin-top: 25px;
 }
 
 .navigation {
@@ -38,7 +58,8 @@
 }
 
 body,
-.container {
+.container,
+.navigationContainer {
   display: flex;
 }
 
@@ -53,14 +74,31 @@ body {
 }
 
 .dropdownTrigger {
-  border: none;
   padding: 5px 25px;
   font-weight: bold;
   margin-bottom: 5px;
   width: 220px;
 }
 
+button {
+  border: none;
+  font-weight: bold;
+}
+
 .dropdownMenuItem,
-.dropdownTrigger {
+.dropdownTrigger,
+.img {
   border-radius: 5px;
+}
+
+.imageCarousel {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.previousBtn,
+.nextBtn {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
 }

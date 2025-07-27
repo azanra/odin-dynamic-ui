@@ -46,6 +46,13 @@ const navigationAttr = {
   },
 };
 
+const carouselImgSwitcherContainerAttr = {
+  elementType: "div",
+  elementAttribute: {
+    class: "carouselImgSwitcherContainer",
+  },
+};
+
 const imageCarousel = (imgSrc) => {
   const state = {
     imgIndex: 0,
@@ -91,9 +98,13 @@ const imageCarousel = (imgSrc) => {
 
   const renderCarousel = () => {
     const imageCarousel = elementUtil.createElement(imageCarouselAttr);
-    imageCarousel.appendChild(renderPreviousBtn());
-    imageCarousel.appendChild(renderImg());
-    imageCarousel.appendChild(renderNextBtn());
+    const carouselImgSwitcherContainer = elementUtil.createElement(
+      carouselImgSwitcherContainerAttr,
+    );
+    imageCarousel.appendChild(carouselImgSwitcherContainer);
+    carouselImgSwitcherContainer.appendChild(renderPreviousBtn());
+    carouselImgSwitcherContainer.appendChild(renderImg());
+    carouselImgSwitcherContainer.appendChild(renderNextBtn());
     imageCarousel.appendChild(renderNavigationContainer());
     return imageCarousel;
   };
