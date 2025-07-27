@@ -29,7 +29,7 @@ const dropdownMenuItemAttr = {
   },
 };
 
-const dropdown = (menuItems) => {
+const dropdown = (menuItems, text) => {
   const renderDropdown = () => {
     const dropdown = elementUtil.createElement(dropdownAttr);
     dropdown.appendChild(renderTriggerBtn());
@@ -45,6 +45,7 @@ const dropdown = (menuItems) => {
 
   const renderTriggerBtn = () => {
     const triggerBtn = elementUtil.createElement(dropdownTriggerBtnAttr);
+    triggerBtn.textContent = text;
     triggerBtn.addEventListener("click", handleTriggerClick);
     return triggerBtn;
   };
