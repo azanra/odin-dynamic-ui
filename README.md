@@ -1,132 +1,90 @@
-# webpack-template
+# Odin Dynamic User
 
-Template repository, since it will be pain in the ass to do it again from scratch everytime i need to create a new vanilla js project
-Here how to use the template [Github Template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
+## Table of contents
 
-run this to install the dependency
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+
+## Overview
+
+### The challenge
+
+Users should be able to:
+
+Creating dropdown and image carousel
+
+### Screenshot
+
+![](./src/asset/dynamic-ui.png)
+
+### Links
+
+- Live Site URL: [Preview](https://azanra.github.io/odin-dynamic-ui/)
+
+## My process
+
+### Built with
+
+- HTML, CSS, and Javascript
+
+### What I learned
+
+Creating a reusable component with vanilla js/ On the last other project, organizing the code with view and controller is kinda hard to understand because it scatered all over the place. and if i didn't touch the codebase for a while. i need to use debugger or using reference. and it takes quite while for me to understand it. Because i kinda used to how react organize the code. i would like to recreate the way of organizing it here. all related code wll be clumped into one places.
+
+All the component will returning the function that render the component parent that contain all the children necessary for those component, to use this component all i need to do is append it to the other element
 
 ```js
-  npm install
-```
+const dropdown = (menuItems, text) => {
+  const renderDropdown = () => {
+    const dropdown = elementUtil.createElement(dropdownAttr);
+    dropdown.appendChild(renderTriggerBtn());
+    const dropdownMenuItem = elementUtil.createElement(dropdownMenuItemAttr);
+    const dropdownMenuItems = renderMenuItems(menuItems);
+    dropdownMenuItems.forEach((menuItems) => {
+      dropdownMenuItem.appendChild(menuItems);
+    });
+    dropdownMenuItem.hidden = true;
+    dropdown.appendChild(dropdownMenuItem);
+    return dropdown;
+  };
 
-Webpack configuration template for HTML, CSS, and Javascript project.
-It will bundle: - Javascript - Img imported in js or html with link - CSS imported in js - HTML
+  const renderTriggerBtn = () => {
+    const triggerBtn = elementUtil.createElement(dropdownTriggerBtnAttr);
+    triggerBtn.textContent = text;
+    triggerBtn.addEventListener("click", handleTriggerClick);
+    return triggerBtn;
+  };
 
-There is two different webpack configuration depending on build that is production and development. and the common one will be used in both build.
+  const handleTriggerClick = () => {
+    const dropdownMenuItem = document.querySelector(".dropdownMenuItem");
+    dropdownMenuItem.hidden = !dropdownMenuItem.hidden;
+  };
 
-All your code should be inside the src, otherwise bundler will throw an error, and the bundled file will be located inside the dist file. which is the file that we will deploy.
+  const renderMenuItems = (menuItems) => {
+    const dropdownMenuItems = menuItems.map((item) => {
+      const menuItem = elementUtil.createElement(dropdownMenuItemsAttr);
+      elementUtil.appendTextToElement(menuItem, item);
+      return menuItem;
+    });
+    return dropdownMenuItems;
+  };
 
-To use an img in js, you need to import it with the actual file path. otherwise it will be just an empty string
-
-```js
-import img from "./asset/resource/img.png";
-const imgElement = document.createElement("img");
-imgElement.src = img;
-```
-
-```js
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-module.exports = {
-  entry: "./src/index.js",
-  output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "dist"),
-    clean: true,
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./src/index.html",
-    }),
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.html$/i,
-        loader: "html-loader",
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
-      },
-    ],
-  },
+  return renderDropdown();
 };
 ```
 
-- Specifying the entry point, which is the main file that dependant on
-  other module (importing). the dependancy graph will look like this
-  index.js <---- otherModule
-  - The location of our bundle js file and it's path. and everytime we run
-    the webpack, we want to clean the dist file first, so that it only contain the newest bundle
-  - Plugin to bundle and inject our javascript into html
-  - Module (Loader) that will
-    - Look for any css import in js file and transform it into text (css loader) and from the text, applying it to the js (style loader)
-    - Look for any img url path in our html (eg img with src), so that it will become proper path instead of regular string
-    - Look for any img that was imported in the javascript and return the specified images
+### Continued Development
 
-```js
-const { default: merge } = require("webpack-merge");
-const webpackCommon = require("./webpack.common.js");
+- [How I converted my React app to VanillaJS (and whether or not it was a terrible idea)](https://david-gilbertson.medium.com/how-i-converted-my-react-app-to-vanillajs-and-whether-or-not-it-was-a-terrible-idea-4b14b1b2faff) - If i ever want to understand on how react work under the hood, by trying to replicate it with vanilla js in the future
 
-module.exports = merge(webpackCommon, {
-  mode: "development",
-  devtool: "eval-source-map",
-  devServer: {
-    watchFiles: ["./src/index.html"],
-    static: "./dist",
-  },
-});
-```
+### Useful resources
 
-- Merging our dev config with our common config
-  - Using development mode and dev tool eval source map
-    So that the error message will match the actual file and lines
-    inctead of the bundled file
-  - Using webpack dev serve so that any changes made to the bundled
-    file, will recognized immediately without the need to run webpack
-    on each change that we made
-
-```js
-const { default: merge } = require("webpack-merge");
-const webpackCommon = require("./webpack.common");
-
-module.exports = merge(webpackCommon, {
-  mode: "production",
-  devtool: "source-map",
-});
-```
-
-- Merging the prod config with our common config
-  - Using production mode (that will try to minimize the bundle size) and
-    our error message will match the actual line and file instead of the bundled one
-
-```js
-  "scripts": {
-    "start": "webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "prebranch": "git branch gh-pages",
-    "branch": "git checkout gh-pages && git merge main --no-edit && npm run build",
-    "postbranch": "git add dist -f && git commit -m 'Deploy to github pages'",
-    "push": "git subtree push --prefix dist origin gh-pages",
-    "deploy": "npm run branch && npm run push"
-  },
-```
-
-- start : Running our dev server with dev config
-
-  - build : Bundle the project with prod config
-  - prebranch : create new branch for deployment (run automatically before branch / Life cycle script)
-  - branch : Switch to the new branch, merge it with our main branch and bundle our project
-  - postbranch: add our dist file and commit it (run automatically after branch / Life cycle script)
-  - push : Push the change of our dist fille into our new branch
-  - deploy : run branch script if it's not error, then run push script
-
-  - [Webpack merge](https://webpack.js.org/guides/production/) - On how to split the webpack config
-  - [JSON Script](https://www.upgrad.com/blog/introduction-to-package-json-scripts-in-node-js/) - On how to use lifecycle script
-  - [Odin project](https://www.theodinproject.com/lessons/node-path-javascript-restaurant-page) - On deploying the bundled dist to github
+- [Building React Esque Component Using Vanilla JavaScript](https://bluepnume.medium.com/building-a-react-esque-component-using-vanilla-javascript-ddc99e76b867) - As a base idea on how organizing the code
+- [React You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect) - For detailed explanation when you shouldn't use effect
